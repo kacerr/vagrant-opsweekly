@@ -12,8 +12,8 @@ package { 'mariadb-server': ensure => 'installed'}
 package { 'mariadb': ensure => 'installed'}
 
 # ensure that services are running
-service { 'httpd': ensure => running, enable => true }
-service { 'mariadb': ensure => running, enable => true }
+service { 'httpd': ensure   => running, enable => true, require => Package['httpd'] }
+service { 'mariadb': ensure => running, enable => true, require => Package['mariadb-server'] }
 
 # for local usage this is not security risk
 # in publicly available environment configure firewall propery
@@ -33,6 +33,7 @@ exec { 'git_clone_opsweekly':
 exec { 'initialize_opsweekly_database':
   command => '/bin/bash /vagrant/files/init-opsweekly-database.sh',
   unless  => '/bin/mysqlshow | /bin/grep -q "opsweekly"',
+  require => Service['mariadb'],
 }
 
 # copy apache config file and restart if needed
