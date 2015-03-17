@@ -58,7 +58,7 @@ function getUsername() {
  **/
 $teams = array(
     "localhost:8080" => array(
-        "root_url" => "/opsweekly",
+        "_disable_root_url" => "/opsweekly",
         "display_name" => "Ops",
         "email_report_to" => "ops@mycompany.com",
         "database" => "opsweekly",
