@@ -15,6 +15,10 @@ package { 'mariadb': ensure => 'installed'}
 service { 'httpd': ensure => running, enable => true }
 service { 'mariadb': ensure => running, enable => true }
 
+# for local usage this is not security risk
+# in publicly available environment configure firewall propery
+service { 'firewalld': ensure => stopped, enable => false }
+
 # prepare directory structure
 file { '/srv/www': ensure => 'directory' }
 
