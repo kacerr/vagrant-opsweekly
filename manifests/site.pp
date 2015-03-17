@@ -33,7 +33,10 @@ exec { 'git_clone_opsweekly':
 exec { 'initialize_opsweekly_database':
   command => '/bin/bash /vagrant/files/init-opsweekly-database.sh',
   unless  => '/bin/mysqlshow | /bin/grep -q "opsweekly"',
-  require => Service['mariadb'],
+  require => [
+    Service['mariadb'],
+    Exec['git_clone_opsweekly'],
+  ]
 }
 
 # copy apache config file and restart if needed
